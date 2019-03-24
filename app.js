@@ -53,6 +53,7 @@ var playgame = function(){
         if(check === true){
             wins++
             console.log("Wins: " + wins)
+            console.log("Losses: " + losses)
             display = ""
             for(var j = 0; j < gameWord.arr.length; j++){
             display = display.concat(gameWord.arr[j].displayLetter(), " ")
@@ -82,6 +83,7 @@ var playgame = function(){
             }
             console.log(display)
             losses++
+            console.log("Wins: " + wins)
             console.log("Losses: " + losses)
             inquirer.prompt([
                 {name: "again",
