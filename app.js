@@ -20,9 +20,17 @@ var playgame = function(){
 
     inquirer.prompt([
         {name: "userGuess",
-        type: "list",
+        type: "input",
         message: "Pick a letter",
-        choices: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]},
+        validate: function (input){
+            if(input.length > 1 || (["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]).includes(input) === false){
+                return false
+            }
+            else{
+                return true
+            }
+        }}
+        //choices: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]},
     ]).then(function(answers){
         for(var i = 0; i < gameWord.arr.length; i++){
             
@@ -45,6 +53,11 @@ var playgame = function(){
         if(check === true){
             wins++
             console.log("Wins: " + wins)
+            display = ""
+            for(var j = 0; j < gameWord.arr.length; j++){
+            display = display.concat(gameWord.arr[j].displayLetter(), " ")
+            }
+            console.log(display)
             inquirer.prompt([
                 {name: "again",
                 type: "confirm",
@@ -60,6 +73,14 @@ var playgame = function(){
             })
         }
         else if(guesses === 0){
+            for(var l = 0; l < gameWord.arr.length; l++){                       
+                gameWord.arr[l].guessed = true;
+            }
+            display = ""
+            for(var j = 0; j < gameWord.arr.length; j++){
+            display = display.concat(gameWord.arr[j].displayLetter(), " ")
+            }
+            console.log(display)
             losses++
             console.log("Losses: " + losses)
             inquirer.prompt([
