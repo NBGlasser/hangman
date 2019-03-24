@@ -20,7 +20,6 @@ var playgame = function(){
         message: "Pick a letter",
         choices: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]},
     ]).then(function(answers){
-        
         for(var i = 0; i < gameWord.arr.length; i++){
             
             if(gameWord.arr[i].name === answers.userGuess){
@@ -32,6 +31,7 @@ var playgame = function(){
         if(correct === false){
             guesses--
         }
+        correct = false;
         var check = true
         for(var k = 0; k < gameWord.arr.length; k++){
             if(gameWord.arr[k].guessed === false){
@@ -41,10 +41,36 @@ var playgame = function(){
         if(check === true){
             wins++
             console.log("Wins: " + wins)
+            inquirer.prompt([
+                {name: "again",
+                type: "confirm",
+                message: "Would you like to play again?"}
+                ]).then(function(res){
+                if(res.again){
+                    gameWord = new Word(wordArr[Math.floor(Math.random() * wordArr.length)])
+                    gameWord.populate();
+                    guesses = 6;
+                    check = false;
+                    playgame()
+                }
+            })
         }
         else if(guesses === 0){
             losses++
             console.log("Losses: " + losses)
+            inquirer.prompt([
+                {name: "again",
+                type: "confirm",
+                message: "Would you like to play again?"}
+                ]).then(function(res){
+                if(res.again){
+                    gameWord = new Word(wordArr[Math.floor(Math.random() * wordArr.length)])
+                    gameWord.populate();
+                    guesses = 6;
+                    check = false;
+                    playgame()
+                }
+            })
         }
         else{
             console.log("Guesses remaining: " + guesses)
