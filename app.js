@@ -6,14 +6,18 @@ var guesses = 6;
 var wins = 0;
 var losses = 0;
 var correct = false;
+var display = ""
 gameWord.populate()
 
 console.log("Guesses remaining: " + guesses)
 
 var playgame = function(){
+    display = ""
     for(var j = 0; j < gameWord.arr.length; j++){
-    console.log(gameWord.arr[j].displayLetter())
+    display = display.concat(gameWord.arr[j].displayLetter(), " ")
     }
+    console.log(display)
+
     inquirer.prompt([
         {name: "userGuess",
         type: "list",
